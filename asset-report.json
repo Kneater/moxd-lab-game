@@ -1,0 +1,44 @@
+{
+  "source_scene_objects": 3408,
+  "combined_objects": 1,
+  "separate_textured_details": [
+    "Case label panel",
+    "Oscilloscope live waveform"
+  ],
+  "poster_removed": true,
+  "bottle_preserved": true,
+  "iot_rotation_degrees": -88.36343254070287,
+  "case_facing_target": [
+    3.8,
+    0.774,
+    -5.4
+  ],
+  "station_object": "Green sensor kit beside Raspberry",
+  "station_position": [
+    4.79,
+    0.824,
+    -5.33
+  ],
+  "kit_origin": [
+    4.79,
+    0.774,
+    -5.33
+  ],
+  "kit_rotation_degrees": -90,
+  "case_position": [
+    5.55,
+    0.774,
+    -5.45
+  ],
+  "player_start": [
+    3.8,
+    1.65,
+    -5.4
+  ],
+  "scope_display_offset_m": 0.004,
+  "triangles": 971564,
+  "material_slots": 43,
+  "trolley_removed": true,
+  "chairs_shifted_m": 0.28,
+  "glb_bytes": 52459408
+}

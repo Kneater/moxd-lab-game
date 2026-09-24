@@ -1,0 +1,18 @@
+{
+  "lab": {
+    "before": 52459408,
+    "after": 17416152
+  },
+  "sensor-kit": {
+    "before": 7747400,
+    "after": 757884
+  },
+  "solder-bench": {
+    "before": 11088548,
+    "after": 4421524
+  },
+  "print-bench": {
+    "before": 2947004,
+    "after": 463468
+  }
+}

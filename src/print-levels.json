@@ -1,0 +1,5 @@
+[
+ {"name":"Sensor-Platine","label":"01 · Rechteck","outline":[[200,165],[400,165],[400,315],[200,315]],"clearance":14,"maxGap":36,"color":"#246e62"},
+ {"name":"USB-Controller","label":"02 · Mit Anschluss","outline":[[215,160],[365,160],[365,205],[402,205],[402,260],[365,260],[365,320],[215,320]],"clearance":14,"maxGap":30,"color":"#285a85"},
+ {"name":"Winkel-Platine","label":"03 · L-Form","outline":[[205,150],[300,150],[300,230],[395,230],[395,325],[205,325]],"clearance":14,"maxGap":25,"color":"#68467f"}
+]
