@@ -28,7 +28,7 @@ export function createWorld(canvas){
  const halo=new THREE.PointLight(UI_ACCENT,.16,1.2);halo.position.copy(STATION);scene.add(halo);
  const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
  async function load(onProgress){
-  const result=await loader.loadAsync(`${import.meta.env.BASE_URL}models/lab.glb`,e=>onProgress(e.total?e.loaded/e.total:Math.min(.9,e.loaded/36000000)));
+  const result=await loader.loadAsync(`${import.meta.env.BASE_URL}models/lab.glb`,e=>onProgress(Math.min(.99,e.total?e.loaded/e.total:Math.min(.9,e.loaded/36000000))));
   const treated=new Set();
   result.scene.traverse(o=>{
    if(!o.isMesh)return;
