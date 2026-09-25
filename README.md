@@ -15,6 +15,7 @@ Ein begehbares 3D-Labor mit drei interaktiven Minispielen, umgesetzt mit Three.j
 Am besten mit Maus und Tastatur auf einem Desktop oder Laptop spielen. Der Browser benötigt WebGL2.
 
 - **WASD:** Bewegen; **Maus:** Umsehen; **E:** Markierte Station öffnen.
+- **F:** Vollbild ein- oder ausschalten (gilt im Menü und an allen Stationen).
 - **Esc:** Pause bzw. zurück ins Lab. **?:** Anleitung zur aktuellen Bedienung.
 - Alle Stationen lassen sich auch direkt über das Startmenü öffnen.
 - Fortschritt wird lokal im jeweiligen Browser gespeichert. Es gibt keine Anmeldung, keinen Server-Spielstand und keinen Mehrspielermodus.

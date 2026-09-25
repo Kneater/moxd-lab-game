@@ -87,7 +87,25 @@ $('undo-wire').onclick=()=>{if(state.step!==1)return;state.wires.pop();state.pen
 $('distance').oninput=e=>{const previous=state.completed;setDistance(state,e.target.value);world.workshop.distance(state.distance);renderDistance();$('task-checks').innerHTML=`<div class="check-item ${state.nearTested?'done':''}">Warnung unter 30 cm</div><div class="check-item ${state.farTested?'done':''}">Freier Abstand ab 30 cm</div>`;if(!previous&&state.completed)tone();};
 $('sound').onclick=()=>{soundOn=!soundOn;$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').setAttribute('aria-label',soundOn?'Spielklänge ausschalten':'Spielklänge einschalten');$('sound').innerHTML=`♪ <span>Ton ${soundOn?'an':'aus'}</span>`;if(soundOn)tone();};
 $('help').onclick=()=>{modalOpen=true;solderUI?.cancel();printUI?.cancel();if(mode==='walk')pauseWalk();$('help-modal').hidden=false;exitMouse();$('close-help').focus();};$('close-help').onclick=()=>{modalOpen=false;$('help-modal').hidden=true;};$('reload').onclick=()=>location.reload();
-window.addEventListener('keydown',e=>{if(modalOpen){if(e.code==='Escape'){$('help-modal').hidden=true;modalOpen=false;}return;}
+let fullscreenBusy=false,fullscreenNoticeTimer;
+async function toggleFullscreen(){
+ if(fullscreenBusy)return;
+ fullscreenBusy=true;
+ try{
+  if(document.fullscreenElement)await document.exitFullscreen();
+  else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();
+  else throw new Error('Fullscreen API unavailable');
+ }catch{
+  const notice=$('fullscreen-notice');notice.textContent='Vollbild ist hier nicht verfügbar. Öffne das Spiel direkt in einem aktuellen Browser.';notice.hidden=false;
+  clearTimeout(fullscreenNoticeTimer);fullscreenNoticeTimer=setTimeout(()=>notice.hidden=true,6000);
+ }finally{fullscreenBusy=false;}
+}
+document.addEventListener('fullscreenchange',()=>{keys.clear();world?.resize();$('fullscreen-notice').hidden=true;});
+window.addEventListener('keydown',e=>{
+ if(e.code==='KeyF'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!e.isComposing&&!e.target.closest?.('input,textarea,select,[contenteditable]')){
+  e.preventDefault();if(!e.repeat)void toggleFullscreen();return;
+ }
+ if(modalOpen){if(e.code==='Escape'){$('help-modal').hidden=true;modalOpen=false;}return;}
  if(e.code==='Escape'){if(mode==='walk')pauseWalk();else if(mode==='station'||mode==='solder'||mode==='print')returnLab();return;}
  if(mode==='walk'){if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();keys.add(e.code);if(e.code==='KeyE'){if(printInReach())enterPrint();else if(solderInReach())enterSolder();else if(stationInReach())enterStation();}}
 });window.addEventListener('keyup',e=>keys.delete(e.code));window.addEventListener('blur',()=>{keys.clear();if(mode==='walk')pauseWalk();});document.addEventListener('visibilitychange',()=>{if(document.hidden&&mode==='walk')pauseWalk();});
@@ -140,7 +158,7 @@ async function init(){try{
  if(import.meta.env.DEV&&new URLSearchParams(location.search).get('review')==='bench'){
   player={x:1.08,z:-1.43};yaw=Math.PI;pitch=-.35;setMode('walk');
  }
- ready=true;$('print-direct').disabled=false;$('solder-direct').disabled=false;$('start').disabled=false;$('direct-start').disabled=false;$('start-label').textContent='Lab betreten';$('load-status').textContent='Bereit · Maus & Tastatur';$('loading-bar').style.width='100%';
+ ready=true;$('print-direct').disabled=false;$('solder-direct').disabled=false;$('start').disabled=false;$('direct-start').disabled=false;$('start-label').textContent='Lab betreten';$('load-status').textContent='Bereit · Maus & Tastatur · F für Vollbild';$('loading-bar').style.width='100%';
  // Read-only diagnostics make errors and performance observable during development.
  window.moxdDiagnostics=()=>({mode,printing:printUI?.getState(),solder:solderUI?.getState(),step:state.step,placed:{...state.placed},wires:state.wires.map(w=>[...w]),distance:state.distance,completed:state.completed,player:{...player},ready,drawCalls:world.renderer.info.render.calls,triangles:world.renderer.info.render.triangles});
  }catch(error){console.error(error);$('error-message').textContent='Die 3D-Szene konnte nicht geöffnet werden. Verwende einen aktuellen Browser mit WebGL und starte das Spiel über den lokalen Server. '+error.message;$('error-panel').hidden=false;}}
